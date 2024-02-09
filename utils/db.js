@@ -1,14 +1,22 @@
-var connection = mysql.createConnection({
-  host: "localhost",
-  user: "your_mysql_username",
-  password: "your_mysql_password",
-  database: "your_database_name",
+const mysql = require("mysql2");
+
+const db = mysql.createConnection({
+  host: "gateway01.eu-central-1.prod.aws.tidbcloud.com",
+  port: 4000,
+  user: "44o1HbtaMUVxuXD.root",
+  password: "vinesakndi6bI7qq",
+  database: "test",
+  ssl: {
+    rejectUnauthorized: true,
+  },
 });
 
-export const db = connection.connect(function (err) {
+db.connect(function (err) {
   if (err) {
     console.error("Error connecting to MySQL database: " + err.stack);
     return;
   }
-  console.log("Connected to MySQL database as id " + connection.threadId);
+  console.log("Connected to MySQL database as id ");
 });
+
+module.exports = db;

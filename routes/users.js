@@ -1,7 +1,6 @@
 var express = require("express");
 var router = express.Router();
-var mysql = require("mysql");
-var bcrypt = require("bcrypt");
+var bcrypt = require('bcryptjs');
 var jwt = require("jsonwebtoken");
 var { db } = require("../utils/db");
 
