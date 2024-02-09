@@ -1,0 +1,41 @@
+# Dependency directories
+node_modules/
+
+# Generated files
+*.log
+*.pem
+*.pid
+*.seed
+*.sqlite
+*.db
+
+# Logs and other generated files
+logs/
+*.pid
+*.log
+
+# Runtime data
+pids/
+*.pid
+*.seed
+*.pid.lock
+
+# Environment variables
+.env
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDE or editor files
+.vscode/
+.idea/
+
+# dotenv environment variables file
+.env
+
+# Compiled binary addons (for example, node-sass)
+/build/
+
+# Docker Compose files
+docker-compose.yml
