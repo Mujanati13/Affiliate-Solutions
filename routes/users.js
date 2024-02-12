@@ -20,7 +20,7 @@ router.post("/api/v1/beta/register", function (req, res, next) {
   function checkUsername(callback) {
     var uniqueUsername = username + (suffix === 0 ? "" : suffix); // Append suffix if necessary
     db.query(
-      "SELECT * FROM users WHERE username = ?",
+      "SELECT * FROM client WHERE username = ?",
       [uniqueUsername],
       function (error, results, fields) {
         if (error) {
@@ -46,7 +46,7 @@ router.post("/api/v1/beta/register", function (req, res, next) {
 
       // Insert user into database
       db.query(
-        "INSERT INTO users (email, password, firstName, lastName, age, username) VALUES (?, ?, ?, ?, ?, ?)",
+        "INSERT INTO client (email, password, first_name, last_name, age, username) VALUES (?, ?, ?, ?, ?, ?)",
         [email, hash, firstName, lastName, age, uniqueUsername],
         function (error, results, fields) {
           if (error) {
@@ -69,7 +69,7 @@ router.post("/api/v1/beta/login", function (req, res, next) {
 
   // Find user by email in the database
   db.query(
-    "SELECT * FROM users WHERE email = ?",
+    "SELECT * FROM client WHERE email = ?",
     [email],
     function (error, results, fields) {
       if (error) {
