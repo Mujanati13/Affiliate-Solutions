@@ -20,7 +20,7 @@ router.post("/api/v1/beta/register", function (req, res, next) {
   function checkUsername(callback) {
     var uniqueUsername = username + (suffix === 0 ? "" : suffix); // Append suffix if necessary
     db.query(
-      "SELECT * FROM users WHERE username = ?",
+      "SELECT * FROM client WHERE username = ?",
       [uniqueUsername],
       function (error, results, fields) {
         if (error) {
@@ -46,7 +46,7 @@ router.post("/api/v1/beta/register", function (req, res, next) {
 
       // Insert user into database
       db.query(
-        "INSERT INTO users (email, password, firstName, lastName, age, username) VALUES (?, ?, ?, ?, ?, ?)",
+        "INSERT INTO client (email, password, firstName, lastName, age, username) VALUES (?, ?, ?, ?, ?, ?)",
         [email, hash, firstName, lastName, age, uniqueUsername],
         function (error, results, fields) {
           if (error) {
@@ -60,7 +60,7 @@ router.post("/api/v1/beta/register", function (req, res, next) {
 });
 
 router.post("/api/v1/beta/login", function (req, res, next) {
-  var { email, password } = req.body;
+  var { email, password, longExpiration } = req.body; // Add 'longExpiration' to destructuring
 
   // Check if email and password are provided
   if (!email || !password) {
@@ -69,7 +69,7 @@ router.post("/api/v1/beta/login", function (req, res, next) {
 
   // Find user by email in the database
   db.query(
-    "SELECT * FROM users WHERE email = ?",
+    "SELECT * FROM client WHERE email = ?",
     [email],
     function (error, results, fields) {
       if (error) {
@@ -88,11 +88,17 @@ router.post("/api/v1/beta/login", function (req, res, next) {
           return res.status(401).json({ message: "Authentication failed" });
         }
 
-        // Generate JWT token
+        // Set the expiration time based on the 'longExpiration' boolean value
+        let expiresIn = "1h"; // Default expiration time
+        if (longExpiration) {
+          expiresIn = "24h"; // Longer expiration time
+        }
+
+        // Generate JWT token with the determined expiration time
         var token = jwt.sign(
           { email: results[0].email, userId: results[0].id },
           "your_secret_key",
-          { expiresIn: "1h" }
+          { expiresIn: expiresIn }
         );
 
         res
@@ -102,5 +108,6 @@ router.post("/api/v1/beta/login", function (req, res, next) {
     }
   );
 });
+
 
 module.exports = router;
