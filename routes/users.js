@@ -46,7 +46,7 @@ router.post("/api/v1/beta/register", function (req, res, next) {
 
       // Insert user into database
       db.query(
-        "INSERT INTO client (email, password, firstName, lastName, age, username) VALUES (?, ?, ?, ?, ?, ?)",
+        "INSERT INTO users (email, password, firstName, lastName, age, username) VALUES (?, ?, ?, ?, ?, ?)",
         [email, hash, firstName, lastName, age, uniqueUsername],
         function (error, results, fields) {
           if (error) {
