@@ -69,7 +69,7 @@ router.post("/api/v1/beta/login", function (req, res, next) {
 
   // Find user by email in the database
   db.query(
-    "SELECT * client FROM client WHERE email = ?",
+    "SELECT * FROM client WHERE email = ?",
     [email],
     function (error, results, fields) {
       if (error) {
