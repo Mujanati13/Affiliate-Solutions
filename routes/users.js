@@ -1,8 +1,8 @@
 var express = require("express");
 var router = express.Router();
-var bcrypt = require('bcryptjs');
+var bcrypt = require("bcryptjs");
 var jwt = require("jsonwebtoken");
-var { db } = require("../utils/db");
+var  db  = require("../utils/db");
 
 router.post("/api/v1/beta/register", function (req, res, next) {
   var { email, password, firstName, lastName, age } = req.body;
@@ -46,7 +46,7 @@ router.post("/api/v1/beta/register", function (req, res, next) {
 
       // Insert user into database
       db.query(
-        "INSERT INTO users (email, password, firstName, lastName, age, username) VALUES (?, ?, ?, ?, ?, ?)",
+        "INSERT INTO client (email, password, first_name, last_name, age, username) VALUES (?, ?, ?, ?, ?, ?)",
         [email, hash, firstName, lastName, age, uniqueUsername],
         function (error, results, fields) {
           if (error) {
@@ -108,6 +108,5 @@ router.post("/api/v1/beta/login", function (req, res, next) {
     }
   );
 });
-
 
 module.exports = router;
